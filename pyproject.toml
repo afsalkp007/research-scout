@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-scout"
+version = "0.1.0"
+description = "Autonomous research assistant with function calling, multi-step search reasoning, and grounded citations."
+readme = "README.md"
+authors = [
+    { name = "Afsal", email = "afsalkp.mohammed@gmail.com" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+    "requests>=2.28.0",
+]
+
+[project.optional-dependencies]
+ui = [
+    "streamlit>=1.28.0",
+]
+dev = [
+    "pytest>=7.0.0",
+]
+
+[project.scripts]
+research-scout = "research_scout.cli:main"
