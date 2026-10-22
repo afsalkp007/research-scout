@@ -57,46 +57,6 @@ flowchart TD
 
 ---
 
-## 🖥️ Terminal CLI Preview
-
-```text
-─── Step 1 ───
-💭 Thought: I will perform an initial web search to discover primary benchmark data and sources.
-⚡ Action: web_search(query='LLM multi-step agent evaluation benchmarks 2026')
-👁️ Observation: [1] Title: HELM Benchmark (URL: https://crfm.stanford.edu/helm/latest/)...
-
-─── Step 2 ───
-💭 Thought: The initial search returned high-relevance sources. I will fetch the top technical document.
-⚡ Action: fetch_webpage(url='https://crfm.stanford.edu/helm/latest/')
-👁️ Observation: HELM assesses models across multiple axes including accuracy, calibration, toxicity...
-
-─── Step 3 ───
-✓ Status: Research Concluded
-
-                                        💡 Key Findings & Evidence
-┏━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
-┃ # ┃ Claim & Technical Explanation                                      ┃ Citations ┃
-┡━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
-│ 1 │ Single-metric benchmarks fail to capture multi-step agent failures │    [1]    │
-│   │ Agents fail predominantly in tool dispatch drift and loop stops.   │           │
-│ 2 │ Step-level trajectory evaluation is standard in production         │  [1], [2] │
-│   │ Frameworks advocate unit testing tools in deterministic sandboxes. │           │
-└───┴────────────────────────────────────────────────────────────────────┴───────────┘
-```
-
----
-
-## ⚖️ Engineering & Product Trade-offs (AI PM Rationale)
-
-| Decision | Choice | Rationale & Trade-off |
-| :--- | :--- | :--- |
-| **Stopping Criteria** | Fixed `max_steps` + Agent Self-Check | Runaway agent loops explode API budgets. Enforcing a hard ceiling (e.g. 4 steps) alongside an autonomous termination check ensures deterministic cost control. |
-| **Content Truncation** | 2,500 Char Budget per Page | Feeding full 50,000-word webpages consumes tokens rapidly and causes context dilution ("lost-in-the-middle"). Extracting clean text snippets keeps latency under 2 seconds. |
-| **Tool Registry vs Hardcoded Functions** | Abstract `ToolRegistry` | Decouples tool execution from model prompt structure, allowing hot-swapping between Gemini, OpenAI, or local fine-tuned models without rewrites. |
-| **Strict Citations vs Free Text** | Validated `Citation` Model | Forcing the agent to map findings to numbered citations prevents speculative reasoning and provides a verifiable audit trail. |
-
----
-
 ## 🚀 Quickstart
 
 ### 1. Clone & Set Up Environment
